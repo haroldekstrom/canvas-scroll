@@ -1,9 +1,19 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .App {
+  min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   padding: 1rem;
+  position: relative;
 }
 
 .canvas-scroller {
   border: 1px solid #123456;
-  margin: 0 auto;
+  background-color: white;
+  flex-grow: 1;
 }
