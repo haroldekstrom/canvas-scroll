@@ -24,6 +24,7 @@ function App() {
     canvas.style.width = width + "px"
     canvas.style.height = height + "px"
     ctx.scale(dpr, dpr)
+    ctx.translate(-origin.x, -origin.y)
 
     //ctx.clearRect(0, 0, canvas.width, canvas.height)
 
@@ -31,28 +32,23 @@ function App() {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     ctx.strokeStyle = "hsl(218,22%,27%)"
-    ctx.moveTo(0 - origin.x, IMAGE_HEIGHT / 2 - origin.y)
-    ctx.lineTo(IMAGE_WIDTH - origin.x, IMAGE_HEIGHT / 2 - origin.y)
+    ctx.moveTo(0, IMAGE_HEIGHT / 2)
+    ctx.lineTo(IMAGE_WIDTH, IMAGE_HEIGHT / 2)
     ctx.stroke()
 
     ctx.strokeStyle = "hsl(218,22%,27%)"
-    ctx.moveTo(IMAGE_WIDTH / 2 - origin.x, 0 - origin.y)
-    ctx.lineTo(IMAGE_WIDTH / 2 - origin.x, IMAGE_HEIGHT - origin.y)
+    ctx.moveTo(IMAGE_WIDTH / 2, 0)
+    ctx.lineTo(IMAGE_WIDTH / 2, IMAGE_HEIGHT)
     ctx.stroke()
 
     ctx.fillStyle = "hsl(148,64%,52%)"
-    ctx.fillRect(10 - origin.x, 10 - origin.y, IMAGE_WIDTH / 2 - 40, 100)
+    ctx.fillRect(10, 10, IMAGE_WIDTH / 2 - 40, 100)
 
     ctx.fillStyle = "hsl(212,66%,60%)"
-    ctx.fillRect(IMAGE_WIDTH / 2 - 20 - origin.x, 10 - origin.y, 40, IMAGE_HEIGHT - 20)
+    ctx.fillRect(IMAGE_WIDTH / 2 - 20, 10, 40, IMAGE_HEIGHT - 20)
 
     ctx.fillStyle = "hsl(354,70%,54%)"
-    ctx.fillRect(
-      IMAGE_WIDTH / 2 + 30 - origin.x,
-      IMAGE_HEIGHT - 100 - 10 - origin.y,
-      IMAGE_WIDTH / 2 - 20,
-      100
-    )
+    ctx.fillRect(IMAGE_WIDTH / 2 + 30, IMAGE_HEIGHT - 100 - 10, IMAGE_WIDTH / 2 - 20, 100)
   }, [width, height, origin])
 
   const onScroll = event => {
