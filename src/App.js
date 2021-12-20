@@ -28,7 +28,7 @@ function App() {
     ctx.scale(dpr, dpr)
     ctx.translate(-origin.x, -origin.y)
 
-    const drawLadderArrow = (x1, y1, x2, y2, color) => {
+    const arrow1 = (x1, y1, x2, y2, color) => {
       const arrowHeadLen = 7
       const arrowHeadAngle = Math.PI / 8
       const arrowHeadHypLen = Math.abs(arrowHeadLen / Math.cos(arrowHeadAngle))
@@ -54,7 +54,7 @@ function App() {
       ctx.fill()
     }
 
-    const drawLadderArrow2 = (x1, y1, x2, y2, color) => {
+    const arrow2 = (x1, y1, x2, y2, color) => {
       const arrowHeadLen = 7
       const arrowNotchLen = 5
       const arrowHeadAngle = (30 * Math.PI) / 180
@@ -82,7 +82,7 @@ function App() {
     }
 
     const arrowHeadPath = new Path2D("M -7 -4 L 0 0 L -7 4 L -5 0 z")
-    const drawLadderArrow3 = (x1, y1, x2, y2, color) => {
+    const arrow3 = (x1, y1, x2, y2, color) => {
       ctx.save()
       ctx.strokeStyle = color
       ctx.fillStyle = color
@@ -121,24 +121,24 @@ function App() {
     ctx.fillStyle = "hsl(354,70%,54%)"
     ctx.fillRect(IMAGE_WIDTH / 2 + 30, IMAGE_HEIGHT - 100 - 10, IMAGE_WIDTH / 2 - 20, 100)
 
-    drawLadderArrow(10, pxRound(140), 200, pxRound(140), "darkRed")
-    drawLadderArrow2(10, pxRound(150), 200, pxRound(150), "darkGreen")
-    drawLadderArrow3(10, pxRound(160), 200, pxRound(160), "purple")
+    arrow1(10, pxRound(140), 200, pxRound(140), "darkRed")
+    arrow2(10, pxRound(150), 200, pxRound(150), "darkGreen")
+    arrow3(10, pxRound(160), 200, pxRound(160), "purple")
 
-    drawLadderArrow(pxRound(50), 200, pxRound(50), 300, "darkRed")
-    drawLadderArrow(pxRound(100), pxRound(300), pxRound(80), pxRound(200), "darkRed")
-    drawLadderArrow(pxRound(110), 300, pxRound(90), 200, "darkRed")
-    drawLadderArrow(120, 300, 100, 200, "darkRed")
+    arrow1(pxRound(50), 200, pxRound(50), 300, "darkRed")
+    arrow1(pxRound(100), pxRound(300), pxRound(80), pxRound(200), "darkRed")
+    arrow1(pxRound(110), 300, pxRound(90), 200, "darkRed")
+    arrow1(120, 300, 100, 200, "darkRed")
 
-    drawLadderArrow2(pxRound(200), pxRound(300), pxRound(120), pxRound(200), "darkGreen")
-    drawLadderArrow2(pxRound(210), pxRound(300), pxRound(190), pxRound(200), "darkGreen")
-    drawLadderArrow2(pxRound(220), 300, pxRound(200), 200, "darkGreen")
-    drawLadderArrow2(230, 300, 210, 200, "darkGreen")
+    arrow2(pxRound(200), pxRound(300), pxRound(120), pxRound(200), "darkGreen")
+    arrow2(pxRound(210), pxRound(300), pxRound(190), pxRound(200), "darkGreen")
+    arrow2(pxRound(220), 300, pxRound(200), 200, "darkGreen")
+    arrow2(230, 300, 210, 200, "darkGreen")
 
-    drawLadderArrow3(pxRound(260), pxRound(200), pxRound(250), pxRound(300), "purple")
-    drawLadderArrow3(pxRound(270), 200, pxRound(260), 300, "purple")
-    drawLadderArrow3(280, 200, 270, 300, "purple")
-    drawLadderArrow3(pxRound(360), pxRound(200), pxRound(280), pxRound(300), "purple")
+    arrow3(pxRound(260), pxRound(200), pxRound(250), pxRound(300), "purple")
+    arrow3(pxRound(270), 200, pxRound(260), 300, "purple")
+    arrow3(280, 200, 270, 300, "purple")
+    arrow3(pxRound(360), pxRound(200), pxRound(280), pxRound(300), "purple")
   }, [width, height, origin])
 
   const onScroll = event => {
