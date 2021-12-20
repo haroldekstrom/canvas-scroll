@@ -2,10 +2,13 @@ import React, { useEffect, useState, useRef } from "react"
 import { useMeasure } from "react-use"
 import "./App.css"
 
-function App() {
-  const IMAGE_WIDTH = 1000
-  const IMAGE_HEIGHT = 10000
+const dpr = window.devicePixelRatio || 1
+const pxAlign = dpr - Math.floor(dpr) === 0 ? 0.5 : 0
+const pxRound = (px: number) => Math.floor(px) + pxAlign
+const IMAGE_WIDTH = 1000
+const IMAGE_HEIGHT = 10000
 
+function App() {
   const refCanvas = useRef(null)
   const [refScroller, { width, height }] = useMeasure(null)
   const [origin, setOrigin] = useState({ x: 0, y: 0 })
@@ -18,7 +21,6 @@ function App() {
     const canvas = refCanvas.current
     const ctx = canvas.getContext("2d")
 
-    const dpr = window.devicePixelRatio || 1
     canvas.width = width * dpr
     canvas.height = height * dpr
     canvas.style.width = width + "px"
@@ -95,19 +97,19 @@ function App() {
       ctx.restore()
     }
 
-    //ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.lineWidth = 1 / dpr
 
     ctx.fillStyle = "white"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     ctx.strokeStyle = "hsl(218,22%,27%)"
-    ctx.moveTo(0, IMAGE_HEIGHT / 2 + 0.5)
-    ctx.lineTo(IMAGE_WIDTH, IMAGE_HEIGHT / 2 + 0.5)
+    ctx.moveTo(0, pxRound(IMAGE_HEIGHT / 2))
+    ctx.lineTo(IMAGE_WIDTH, pxRound(IMAGE_HEIGHT / 2))
     ctx.stroke()
 
     ctx.strokeStyle = "hsl(218,22%,27%)"
-    ctx.moveTo(IMAGE_WIDTH / 2, 0)
-    ctx.lineTo(IMAGE_WIDTH / 2, IMAGE_HEIGHT)
+    ctx.moveTo(pxRound(IMAGE_WIDTH / 2), 0)
+    ctx.lineTo(pxRound(IMAGE_WIDTH / 2), IMAGE_HEIGHT)
     ctx.stroke()
 
     ctx.fillStyle = "hsl(148,64%,52%)"
@@ -119,19 +121,24 @@ function App() {
     ctx.fillStyle = "hsl(354,70%,54%)"
     ctx.fillRect(IMAGE_WIDTH / 2 + 30, IMAGE_HEIGHT - 100 - 10, IMAGE_WIDTH / 2 - 20, 100)
 
-    drawLadderArrow(10, 140.5, 200, 140.5, "darkRed")
-    drawLadderArrow2(10, 150.5, 200, 150.5, "darkGreen")
-    drawLadderArrow3(10, 160.5, 200, 160.5, "purple")
+    drawLadderArrow(10, pxRound(140), 200, pxRound(140), "darkRed")
+    drawLadderArrow2(10, pxRound(150), 200, pxRound(150), "darkGreen")
+    drawLadderArrow3(10, pxRound(160), 200, pxRound(160), "purple")
 
-    drawLadderArrow(50.5, 200, 50.5, 300, "darkRed")
-    drawLadderArrow(100.5, 300.5, 80.5, 200.5, "darkRed")
+    drawLadderArrow(pxRound(50), 200, pxRound(50), 300, "darkRed")
+    drawLadderArrow(pxRound(100), pxRound(300), pxRound(80), pxRound(200), "darkRed")
+    drawLadderArrow(pxRound(110), 300, pxRound(90), 200, "darkRed")
+    drawLadderArrow(120, 300, 100, 200, "darkRed")
 
-    drawLadderArrow2(200.5, 300.5, 120.5, 200.5, "darkGreen")
-    drawLadderArrow2(220.5, 300, 220.5, 200, "darkGreen")
+    drawLadderArrow2(pxRound(200), pxRound(300), pxRound(120), pxRound(200), "darkGreen")
+    drawLadderArrow2(pxRound(210), pxRound(300), pxRound(190), pxRound(200), "darkGreen")
+    drawLadderArrow2(pxRound(220), 300, pxRound(200), 200, "darkGreen")
+    drawLadderArrow2(230, 300, 210, 200, "darkGreen")
 
-    drawLadderArrow3(320.5, 300, 320.5, 200, "purple")
-    drawLadderArrow3(240.5, 300.5, 440.5, 200.5, "purple")
-    drawLadderArrow3(250.5, 300, 250.5, 200, "purple")
+    drawLadderArrow3(pxRound(260), pxRound(200), pxRound(250), pxRound(300), "purple")
+    drawLadderArrow3(pxRound(270), 200, pxRound(260), 300, "purple")
+    drawLadderArrow3(280, 200, 270, 300, "purple")
+    drawLadderArrow3(pxRound(360), pxRound(200), pxRound(280), pxRound(300), "purple")
   }, [width, height, origin])
 
   const onScroll = event => {
