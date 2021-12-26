@@ -7,6 +7,10 @@ const pxAlign = dpr - Math.floor(dpr) === 0 ? 0.5 : 0
 const pxRound = (px: number) => Math.floor(px) + pxAlign
 const IMAGE_WIDTH = 1000
 const IMAGE_HEIGHT = 10000
+const arrowHeadLen = 7
+const arrowNotchLen = 5
+const arrowHeadAngle = (30 * Math.PI) / 180
+const arrowHeadHypLen = Math.abs(arrowHeadLen / Math.cos(arrowHeadAngle))
 
 function App() {
   const refCanvas = useRef(null)
@@ -29,10 +33,6 @@ function App() {
     ctx.translate(-origin.x, -origin.y)
 
     const arrow1 = (x1, y1, x2, y2, color) => {
-      const arrowHeadLen = 7
-      const arrowHeadAngle = Math.PI / 8
-      const arrowHeadHypLen = Math.abs(arrowHeadLen / Math.cos(arrowHeadAngle))
-
       ctx.strokeStyle = color
       ctx.fillStyle = color
       ctx.lineWidth = 1 / dpr
@@ -41,9 +41,9 @@ function App() {
       ctx.lineTo(x2, y2)
       ctx.stroke()
 
-      const lineAngle = Math.atan2(y2 - y1, x2 - x1)
-      const angle1 = lineAngle + Math.PI + arrowHeadAngle
-      const angle2 = lineAngle + Math.PI - arrowHeadAngle
+      const lineAngle = Math.PI + Math.atan2(y2 - y1, x2 - x1)
+      const angle1 = lineAngle + arrowHeadAngle
+      const angle2 = lineAngle - arrowHeadAngle
 
       // Alternative approach: create a Path2D from an SVG path and transform.
       ctx.beginPath()
@@ -55,11 +55,6 @@ function App() {
     }
 
     const arrow2 = (x1, y1, x2, y2, color) => {
-      const arrowHeadLen = 7
-      const arrowNotchLen = 5
-      const arrowHeadAngle = (30 * Math.PI) / 180
-      const arrowHeadHypLen = Math.abs(arrowHeadLen / Math.cos(arrowHeadAngle))
-
       ctx.strokeStyle = color
       ctx.fillStyle = color
       ctx.lineWidth = 1 / dpr
@@ -103,11 +98,13 @@ function App() {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     ctx.strokeStyle = "hsl(218,22%,27%)"
+    ctx.beginPath()
     ctx.moveTo(0, pxRound(IMAGE_HEIGHT / 2))
     ctx.lineTo(IMAGE_WIDTH, pxRound(IMAGE_HEIGHT / 2))
     ctx.stroke()
 
     ctx.strokeStyle = "hsl(218,22%,27%)"
+    ctx.beginPath()
     ctx.moveTo(pxRound(IMAGE_WIDTH / 2), 0)
     ctx.lineTo(pxRound(IMAGE_WIDTH / 2), IMAGE_HEIGHT)
     ctx.stroke()
@@ -125,20 +122,46 @@ function App() {
     arrow2(10, pxRound(150), 200, pxRound(150), "darkGreen")
     arrow3(10, pxRound(160), 200, pxRound(160), "purple")
 
-    arrow1(pxRound(50), 200, pxRound(50), 300, "darkRed")
-    arrow1(pxRound(100), pxRound(300), pxRound(80), pxRound(200), "darkRed")
-    arrow1(pxRound(110), 300, pxRound(90), 200, "darkRed")
-    arrow1(120, 300, 100, 200, "darkRed")
+    ctx.strokeStyle = "hsl(218,22%,88%)"
+    ctx.beginPath()
+    ctx.moveTo(20, pxRound(200))
+    ctx.lineTo(400, pxRound(200))
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.moveTo(20, pxRound(300))
+    ctx.lineTo(400, pxRound(300))
+    ctx.stroke()
 
-    arrow2(pxRound(200), pxRound(300), pxRound(120), pxRound(200), "darkGreen")
-    arrow2(pxRound(210), pxRound(300), pxRound(190), pxRound(200), "darkGreen")
-    arrow2(pxRound(220), 300, pxRound(200), 200, "darkGreen")
-    arrow2(230, 300, 210, 200, "darkGreen")
+    const reps = 1
+    let t1 = performance.now()
+    for (let i = 0; i < reps; i++) {
+      arrow1(pxRound(50), pxRound(200), pxRound(50), pxRound(300), "darkRed")
+      arrow1(pxRound(100), pxRound(300), pxRound(80), pxRound(200), "darkRed")
+      arrow1(pxRound(110), 300, pxRound(90), 200, "darkRed")
+      arrow1(120, 300, 100, 200, "darkRed")
+    }
+    let t2 = performance.now()
+    console.log(`arrow1: ${t2 - t1} ms`)
 
-    arrow3(pxRound(260), pxRound(200), pxRound(250), pxRound(300), "purple")
-    arrow3(pxRound(270), 200, pxRound(260), 300, "purple")
-    arrow3(280, 200, 270, 300, "purple")
-    arrow3(pxRound(360), pxRound(200), pxRound(280), pxRound(300), "purple")
+    t1 = performance.now()
+    for (let i = 0; i < reps; i++) {
+      arrow2(pxRound(200), pxRound(300), pxRound(120), pxRound(200), "darkGreen")
+      arrow2(pxRound(210), pxRound(300), pxRound(190), pxRound(200), "darkGreen")
+      arrow2(pxRound(220), 300, pxRound(200), 200, "darkGreen")
+      arrow2(230, 300, 210, 200, "darkGreen")
+    }
+    t2 = performance.now()
+    console.log(`arrow2: ${t2 - t1} ms`)
+
+    t1 = performance.now()
+    for (let i = 0; i < reps; i++) {
+      arrow3(pxRound(260), pxRound(200), pxRound(250), pxRound(300), "purple")
+      arrow3(pxRound(270), 200, pxRound(260), 300, "purple")
+      arrow3(280, 200, 270, 300, "purple")
+      arrow3(pxRound(360), pxRound(200), pxRound(280), pxRound(300), "purple")
+    }
+    t2 = performance.now()
+    console.log(`arrow3: ${t2 - t1} ms`)
   }, [width, height, origin])
 
   const onScroll = event => {
